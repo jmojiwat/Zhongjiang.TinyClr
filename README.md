@@ -1,4 +1,4 @@
-# Yf-S201 & Yf-S402 Water Flow Meter Library for TinyCLR
+# Yf-S201 & Yf-S402 Water Flow Meter library for TinyCLR
 
 This library uses a timer to measure water flow.
 
