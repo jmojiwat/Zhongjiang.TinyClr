@@ -10,13 +10,14 @@ namespace Zhongjiang.TinyClr.Test
         static void Main()
         {
             var lcd = new Eone1602(PC5, PA15, PB1, PA2, PC7, PC6, PC4, GpioController.GetDefault());
+            var capability = YfSCapabilityExtensions.Yf201Capability();
 
             var gpioController = GpioController.GetDefault();
-            var wfm = new YfS201(PA10, 2000, 1000, gpioController);
-            var wfm2 = new YfS201(PA9, 2000, 1000, gpioController);
-            var wfm3 = new YfS201(PA1, 2000, 1000, gpioController);
-            var wfm4 = new YfS201(PB0, 2000, 1000, gpioController);
-            var wfm5 = new YfS201(PA7, 2000, 1000, gpioController);
+            var wfm = new YfS(capability, PA10, 2000, 1000, gpioController);
+            var wfm2 = new YfS(capability, PA9, 2000, 1000, gpioController);
+            var wfm3 = new YfS(capability, PA1, 2000, 1000, gpioController);
+            var wfm4 = new YfS(capability, PB0, 2000, 1000, gpioController);
+            var wfm5 = new YfS(capability, PA7, 2000, 1000, gpioController);
 
             while (true)
             {

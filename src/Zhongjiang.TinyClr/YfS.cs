@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Threading;
 using GHIElectronics.TinyCLR.Devices.Gpio;
-using static Zhongjiang.TinyClr.VolumeFlowMeter;
 
 namespace Zhongjiang.TinyClr
 {
-    public sealed class YfS201 : IDisposable
+    public sealed class YfS : IDisposable
     {
-        private const float PulsePerLitre = 450f;
+        private readonly YfSCapability capability;
         private readonly GpioPin signalPin;
         private readonly Timer timer;
 
         private int pulseCount;
         private long ticks;
 
-        public YfS201(int signalPinNumber, int initialDelayMilliseconds, int periodMilliseconds,
+        public YfS(YfSCapability capability, int signalPinNumber, int initialDelayMilliseconds, int periodMilliseconds,
             GpioController gpioController)
         {
+            this.capability = capability;
             signalPin = gpioController.OpenPin(signalPinNumber);
             signalPin.SetDriveMode(GpioPinDriveMode.Input);
             signalPin.ValueChanged += OnPinValueChanged;
 
             timer = new Timer(OnTimer, null, initialDelayMilliseconds, periodMilliseconds);
         }
+
+        public float MinimumVolumeFlowLitersPerMinute => capability.MinimumVolumeFlowLitresPerMinute;
+        public float MaximumVolumeFlowLitersPerMinute => capability.MaximumVolumeFlowLitresPerMinute;
 
 
         public float VolumeFlowLitresPerMinute { get; private set; }
@@ -51,8 +54,8 @@ namespace Zhongjiang.TinyClr
 
         private float ReadVolumeFlowLitresPerMinute()
         {
-            var frequencyHertz = CalculateFrequencyHertz(ticks, DateTime.Now.Ticks, pulseCount);
-            return CalculateVolumeFlowLitresPerMinute(frequencyHertz, PulsePerLitre);
+            var frequencyHertz = VolumeFlowMeter.CalculateFrequencyHertz(ticks, DateTime.Now.Ticks, pulseCount);
+            return VolumeFlowMeter.CalculateVolumeFlowLitresPerMinute(frequencyHertz, capability.PulsePerLiter);
         }
 
         private void ResetCounters()

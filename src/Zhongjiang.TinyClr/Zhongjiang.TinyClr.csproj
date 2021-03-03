@@ -32,9 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="VolumeFlowMeter.cs" />
-    <Compile Include="YfS201.cs" />
+    <Compile Include="YfS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YfS402.cs" />
+    <Compile Include="YfSCapability.cs" />
+    <Compile Include="YfSCapabilityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GHIElectronics.TinyCLR.Core">
