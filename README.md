@@ -4,7 +4,9 @@ This library uses a timer to measure water flow.
 
 ```c#
 var gpioController = GpioController.GetDefault();
-var wfm = new YfS201(SC20100.GpioPin.PA10, 2000, 1000, gpioController);
+var capability = YfSCapabilityExtensions.Yf201Capability();
+
+var wfm = new YfS(capability, SC20100.GpioPin.PA10, 2000, 1000, gpioController);
 
 while (true)
 {
